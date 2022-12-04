@@ -29,7 +29,7 @@ public class UserServiceImpl {
 
 	public UserBean getUser(int id) {
 		
-		return null;
+		return userList.stream().filter(user -> user.getId() == id).findFirst().get();
 	}
 
 
