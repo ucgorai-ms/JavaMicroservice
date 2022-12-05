@@ -30,13 +30,15 @@ public class UserServiceImpl {
 
 	public UserBean getUser(int id) {
 		
-		return userList.stream().filter(user -> user.getId() == id).findFirst().get();
+		return userList.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
 	}
 	
-	public void addUser(UserBean user) {
+	public UserBean addUser(UserBean user) {
 		
 		user.setId(++userCount);
 		userList.add(user);
+		
+		return user;
 	}
 
 
