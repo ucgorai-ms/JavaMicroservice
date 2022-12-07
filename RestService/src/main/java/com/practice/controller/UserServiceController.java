@@ -1,9 +1,8 @@
 package com.practice.controller;
 
 import java.net.URI;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.practice.bean.UserBean;
 import com.practice.custom.exception.UserNotFoundException;
 import com.practice.service.impl.UserServiceImpl;
+
+import jakarta.validation.Valid;
+
 
 @RestController
 public class UserServiceController {
@@ -42,13 +44,13 @@ public class UserServiceController {
 		
 		if (user == null) {
 			
-			throw new UserNotFoundException("Id: "+id);
+			throw new UserNotFoundException(String.format("User with the id %s is not availble", id));
 		}
 		return user;
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<Object> addUser(@RequestBody UserBean user) {
+	public ResponseEntity<Object> addUser(@Valid @RequestBody UserBean user) {
 		
 		UserBean savedUser = this.userService.addUser(user);
 		

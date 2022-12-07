@@ -2,10 +2,17 @@ package com.practice.bean;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+
+
+
 public class UserBean {
 	
+	@NotBlank(message="Name is Mandatory")
 	private String name;
 	private int id;
+	@Past(message = "Date should be past date")
 	private LocalDate dateOfBirth;
 	
 	public UserBean(int id, String name, LocalDate dateOfBirth) {
