@@ -3,10 +3,13 @@ package com.practice.service.impl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
 import com.practice.bean.UserBean;
+import com.practice.entity.UserEntity;
+import com.practice.repository.UserRepositiry;
 
 @Component
 public class UserServiceImpl {
@@ -14,31 +17,28 @@ public class UserServiceImpl {
 	private static List<UserBean> userList = new ArrayList<UserBean>();
 	private static int userCount = 0;
 	
-	static 
-	{
-		userList.add(new UserBean(++userCount,"Uma", LocalDate.now().minusYears(32)));
-		userList.add(new UserBean(++userCount,"Twinkle", LocalDate.now().minusYears(21)));
-		userList.add(new UserBean(++userCount,"Dipti", LocalDate.now().minusYears(1).minusMonths(3).minusDays(3)));
-	}
-
-
-	public List<UserBean> getUsers() {
-		
-		return userList;
-	}
-
-
-	public UserBean getUser(int id) {
-		
-		return userList.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
+	private UserRepositiry userRepository;
+	
+	public UserServiceImpl (UserRepositiry userRepository) {
+		this.userRepository=userRepository;
 	}
 	
-	public UserBean addUser(UserBean user) {
+
+
+	public List<UserEntity> getUsers() {
 		
-		user.setId(++userCount);
-		userList.add(user);
+		return userRepository.findAll();
+	}
+
+
+	public Optional<UserEntity> getUser(int id) {
 		
-		return user;
+		return this.userRepository.findById(id);
+	}
+	
+	public void createUser(UserEntity user) {
+		
+		this.userRepository.save(user);
 	}
 
 
