@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -22,6 +24,7 @@ public class UserEntity {
 	private int id;
 	
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<PostEntity> posts;
 	
 	@Past(message = "Date should be past date")

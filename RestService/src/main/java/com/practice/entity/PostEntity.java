@@ -3,6 +3,9 @@ package com.practice.entity;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ public class PostEntity {
 	private int Id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private UserEntity user;
 	
 	private String postDetails;
@@ -38,6 +42,14 @@ public class PostEntity {
 	@Override
 	public String toString() {
 		return "PostEntity [Id=" + Id + ", user=" + user + ", postDetails=" + postDetails + "]";
+	}
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 }
